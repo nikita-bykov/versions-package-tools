@@ -24,7 +24,7 @@ jobs:
 
       - id: Get_new_versions
         name: Get new versions
-        run: ./get-new-tool-versions/get-new-tool-versions.ps1 -ToolName ${{ env.TOOL_NAME }}
+        run: ./get-new-tool-versions/get-new-tool-versions.ps -ToolName ${{ env.TOOL_NAME }}
 
   check_new_versions:
     name: Check new versions
