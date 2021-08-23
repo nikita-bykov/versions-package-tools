@@ -24,7 +24,7 @@ jobs:
 
       - id: Get_new_versions
         name: Get new versions
-        run: ./get-new-tool-versions/get-new-tool-versions.ps -ToolName ${{ env.TOOL_NAME }}
+        run: ./get-new-tool-versions/get-new-tool-versions.ps1 -ToolName ${{ env.TOOL_NAME }}
 
   check_new_versions:
     name: Check new versions
@@ -44,8 +44,10 @@ jobs:
           Import-Module "./helpers/github/github-api.psm1"
           $gitHubApi = Get-GitHubApi -RepositoryFullName "$env:GITHUB_REPOSITORY" `
                                      -AccessToken "${{ secrets.GITHUB_TOKEN }}"
+
           $gitHubApi.CancelWorkflow("$env:GITHUB_RUN_ID")
           Start-Sleep -Seconds 60
+
       - name: Send Slack notification
         run: |
           ./get-new-tool-versions/send-slack-notification.ps1 -Url "${{ secrets.SLACK_CHANNEL_URL }}" `
