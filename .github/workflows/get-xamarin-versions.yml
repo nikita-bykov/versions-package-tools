@@ -24,7 +24,7 @@ jobs:
 
       - id: Get_new_versions
         name: Get new versions
-        run: ./helpers/get-new-tool-versions/get-new-tool-versions.ps1 -ToolName ${{ env.TOOL_NAME }}
+        run: ./get-new-tool-versions/get-new-tool-versions.ps1 -ToolName ${{ env.TOOL_NAME }}
 
   check_new_versions:
     name: Check new versions
@@ -48,7 +48,7 @@ jobs:
           Start-Sleep -Seconds 60
       - name: Send Slack notification
         run: |
-          ./helpers/get-new-tool-versions/send-slack-notification.ps1 -Url "${{ secrets.SLACK_CHANNEL_URL }}" `
+          ./get-new-tool-versions/send-slack-notification.ps1 -Url "${{ secrets.SLACK_CHANNEL_URL }}" `
                                                                       -ToolName "${{ env.TOOL_NAME }}" `
                                                                       -ToolVersion "${{ env.TOOL_VERSIONS }}" `
                                                                       -ImageUrl "https://avatars.githubusercontent.com/u/790012?s=200&v=4"
@@ -67,7 +67,7 @@ jobs:
         run: |
           $pipelineUrl = "$env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID"
           $Message = "The build of the '${{ env.TOOL_NAME }}' detection pipeline failed :progress-error:\nLink to the pipeline: $pipelineUrl"
-          ./helpers/get-new-tool-versions/send-slack-notification.ps1 -Url "${{ secrets.SLACK_CHANNEL_URL }}" `
+          ./get-new-tool-versions/send-slack-notification.ps1 -Url "${{ secrets.SLACK_CHANNEL_URL }}" `
                                                                       -ToolName "${{ env.TOOL_NAME }}" `
                                                                       -Text "$Message" `
                                                                       -ImageUrl "https://avatars.githubusercontent.com/u/790012?s=200&v=4"
