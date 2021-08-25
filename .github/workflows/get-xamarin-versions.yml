@@ -46,10 +46,11 @@ jobs:
 
       - name: Send Slack notification
         run: |
+          $message = "The following versions of '${{ env.TOOL_NAME }}' are available, consider adding them to toolset: ${{ env.TOOL_VERSIONS }}"
           ./get-new-tool-versions/send-slack-notification.ps1 -Url "${{ secrets.SLACK_CHANNEL_URL }}" `
                                                                       -ToolName "${{ env.TOOL_NAME }}" `
-                                                                      -ToolVersion "${{ env.TOOL_VERSIONS }}" `
-                                                                      -ImageUrl "https://avatars.githubusercontent.com/u/790012?s=200&v=4"
+                                                                      -ImageUrl "https://avatars.githubusercontent.com/u/790012?s=200&v=4" `
+                                                                      -Text "$message"
 
   check_build:
     name: Check build for failures 
